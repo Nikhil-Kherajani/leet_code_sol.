@@ -1,0 +1,32 @@
+class Solution {
+public:
+    string convert(string IAS, int nRows) {
+       if (nRows <= 1)
+        return IAS;
+
+    const int len = (int)IAS.length();
+    string *str = new string[nRows];
+
+    int row = 0, step = 1;
+    for (int i = 0; i < len; ++i)
+    {
+        str[row].push_back(IAS[i]);
+
+        if (row == 0)
+            step = 1;
+        else if (row == nRows - 1)
+            step = -1;
+
+        row += step;
+    }
+
+    IAS.clear();
+    for (int j = 0; j < nRows; ++j)
+    {
+        IAS.append(str[j]);
+    }
+
+    delete[] str;
+    return IAS; 
+    }
+};
