@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) 
+    {
+        unordered_map<int,int>mp;
+        int cnt=0;
+        int mx=0;
+        int it=0;
+        for(int i=0;i<s.size();i++)
+        {
+            mp[s[i]]++;
+            if(mp[s[i]]==2)
+            {
+                while(mp[s[i]]==2)
+                {
+                    mp[s[it]]--;
+                    it++;
+                }
+                cnt=i-it+1;
+            }
+            else
+            {
+                cnt++;
+            }
+            mx=max(mx,cnt);
+        }
+        return mx;
+    }
+};
