@@ -30,7 +30,6 @@ class BrowserHistory {
     
     public String forward(int steps) {
         while(steps-- > 0 && head.next != null) head = head.next;
-        while(true)
         
         return head.page;
     }
