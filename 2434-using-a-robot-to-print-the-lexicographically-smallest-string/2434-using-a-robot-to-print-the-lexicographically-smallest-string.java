@@ -1,28 +1,24 @@
 class Solution {
     public String robotWithString(String s) {
-        Map<Character, Integer> lastSeen = new HashMap<>();
-        for (int i = 0; i < s.length(); i++)
-            lastSeen.put(s.charAt(i), i);
-        Set<Integer> used = new HashSet<>();
-        Stack<Character> stack = new Stack<>();
+        int n = s.length();
+        int[] dp = new int[n];
+        dp[n-1] = n-1;
+        for (int i = n-2; i >= 0; i--) {
+			dp[i] = s.charAt(i)<=s.charAt(dp[i+1]) ? i : dp[i+1];
+        }
+        Deque<Character> stack = new ArrayDeque<>();
+        int i = 0;
         StringBuilder sb = new StringBuilder();
-        int preEnd = 0;
-        for (char c = 'a'; c <= 'z'; c++) {
-            while (!stack.isEmpty() && stack.peek() <= c) sb.append(stack.pop());
-            if (!lastSeen.containsKey(c)) continue;
-            int last = lastSeen.get(c);
-            for (int i = preEnd; i <= last; i++) {
-                char cur = s.charAt(i);
-                if (used.add(i)) {
-                    if (cur == c) sb.append(cur);
-                    else stack.add(cur);
+        while(i<n){
+            if(!stack.isEmpty()) sb.append(stack.pop());
+            if(stack.isEmpty() || s.charAt(dp[i])<stack.peek()){
+                int smallestIndex = dp[i];
+                for (; i <= smallestIndex; i++) {
+                    stack.push(s.charAt(i));
                 }
             }
-            preEnd = last + 1;
         }
-        while (!stack.isEmpty()) {
-            sb.append(stack.pop());
-        }
+        while(!stack.isEmpty()) sb.append(stack.pop());
         return sb.toString();
     }
 }
