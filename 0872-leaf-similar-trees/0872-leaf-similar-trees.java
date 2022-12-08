@@ -1,30 +1,64 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
-        ArrayList<Integer> leaf1 = new ArrayList<>();
-        ArrayList<Integer> leaf2 = new ArrayList<>();
+    
+    public ArrayList<Integer> l1 = new ArrayList<>();
+    public ArrayList<Integer> l2 = new ArrayList<>();
+    
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        findLeaves(root1);
+        findLeaves2(root2);
+       
+        if(l1.size() != l2.size()){
+            return false;
+        }
         
-        leaf1 = findLeafNodes(root1,leaf1);
-        leaf2 = findLeafNodes(root2,leaf2);
-        
-        return leaf1.equals(leaf2);
-         
+        for(int i = 0 ; i < l1.size() ; i++){
+            if(l1.get(i) != l2.get(i)){
+                return false;
+            }
+        }
+        return true;
     }
     
-    public static ArrayList<Integer> findLeafNodes(TreeNode root,ArrayList<Integer> leaf){
-        
-        
-        
-        if(root == null){
-            return null;
+
+    
+    public void findLeaves(TreeNode root){
+        if(root.left != null){
+            findLeaves(root.left);
         }
-        
+        if(root.right != null){
+            findLeaves(root.right);
+        }
         if(root.left == null && root.right == null){
-            leaf.add(root.val);
+            l1.add(root.val);
         }
-        
-        findLeafNodes(root.left,leaf);
-        findLeafNodes(root.right,leaf);
-        
-        return  leaf;
     }
+    
+    public void findLeaves2(TreeNode root){
+        if(root.left != null){
+            findLeaves2(root.left);
+        }
+        if(root.right != null){
+            findLeaves2(root.right);
+        }
+        if(root.left == null && root.right == null){
+            l2.add(root.val);
+        }
+    }
+    
+    
 }
