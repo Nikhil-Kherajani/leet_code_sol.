@@ -30,7 +30,7 @@ class Solution {
             while (r <= c && j <= s.length() && j-pi <=9) {
                
                 if (Integer.parseInt(s.substring(pi, j)) <= k) {
-                     System.out.println(Integer.parseInt(s.substring(pi, j)));
+                     
                     flag = true;
                     i++;
                 }
