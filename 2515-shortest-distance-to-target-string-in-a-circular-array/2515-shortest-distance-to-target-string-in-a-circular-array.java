@@ -18,9 +18,9 @@ class Solution {
         boolean rflag = false, lflag = false;
         for (int i = startIndex + words.length; i < newa.length; i++) {
 
-            System.out.println(newa[i]);
+            // System.out.println(newa[i]);
             if (newa[i].equals(target)) {
-                System.out.println(newa[i]);
+                
                 rflag = true;
                 break;
             }
