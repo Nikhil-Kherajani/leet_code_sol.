@@ -11,13 +11,13 @@
  */
 class Solution {
     public boolean hasCycle(ListNode head) {
-        int count = 0;
-        while (head != null) {
-            count++;
-            if (count > 10000) {
+        ListNode i = head, j = head;
+        while (i != null && j != null && j.next != null && j.next.next != null) {
+            i = i.next;
+            j = j.next.next;
+            if (i == j) {
                 return true;
             }
-            head = head.next;
         }
         return false;
     }
