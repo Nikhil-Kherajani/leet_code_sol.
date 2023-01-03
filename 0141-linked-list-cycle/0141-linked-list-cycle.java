@@ -9,15 +9,12 @@
  *     }
  * }
  */
-class Solution {
+public class Solution {
     public boolean hasCycle(ListNode head) {
-        ListNode i = head, j = head;
-        while (i != null && j != null && j.next != null && j.next.next != null) {
-            i = i.next;
-            j = j.next.next;
-            if (i == j) {
-                return true;
-            }
+        while (head != null) {
+            if (head.val == 1_000_000) return true;
+            head.val = 1_000_000;
+            head = head.next;
         }
         return false;
     }
