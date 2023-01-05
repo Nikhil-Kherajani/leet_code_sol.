@@ -19,7 +19,8 @@ class Solution {
     }
 
     public int findMinArrowShots(int[][] points) {
-        columnWiseSorting(points, 1);
+        // columnWiseSorting(points, 1);
+        Arrays.sort(points, (a, b) -> Integer.compare(a[0],b[0]));
         int max = points[0][0];
         int min = points[0][1];
         int ans = 1;
