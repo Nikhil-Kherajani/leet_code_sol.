@@ -1,19 +1,22 @@
 class Solution {
-    
-
     public int climbStairs(int n) {
-        int[] memo = new int[n + 1];
-        return climbStairs(n, memo);
+        if (n == 0) {
+            return 0;
+        } else if (n == 1) {
+            return 1;
+        } else if (n == 2) {
+            return 2;
+        }
+
+        int[] possiblePaths = new int[n + 1];
+        possiblePaths[n] = 0;
+        possiblePaths[n - 1] = 1;
+        possiblePaths[n - 2] = 2;
+
+        for (int i = n - 3; i >= 0; i--) {
+            possiblePaths[i] = possiblePaths[i+2] + possiblePaths[i+ 1];
+        }
+
+        return possiblePaths[0];
     }
-
-    private int climbStairs(int n, int[] memo) {
-
-        if (n == 1) memo[1] = 1;
-        if (n == 2) memo[2] = 2;
-
-        if (memo[n] > 0) return memo[n];
-
-        return memo[n] = climbStairs(n - 1, memo) + climbStairs(n - 2, memo);
-    }
-
 }
