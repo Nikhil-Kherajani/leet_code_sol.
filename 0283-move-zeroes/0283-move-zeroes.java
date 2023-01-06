@@ -1,4 +1,4 @@
-import java.util.*;
+
 
 class Solution {
     public void moveZeroes(int[] nums) {
@@ -9,17 +9,11 @@ class Solution {
                 nums[l] = nums[r];
                 nums[r] = temp;
                 l++;
-                r++;
-            } else if (nums[l] != 0 && nums[r] == 0) {
-                l++;
-                r++;
 
-            } else if (nums[l] == 0 && nums[r] == 0) {
-                r++;
-            } else if (nums[l] != 0 && nums[r] != 0) {
+            } else if (nums[l] != 0) {
                 l++;
-                r++;
             }
+            r++;
         }
     }
 
