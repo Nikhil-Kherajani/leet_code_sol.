@@ -2,16 +2,29 @@ import java.util.*;
 
 class Solution {
     public int maxIceCream(int[] costs, int coins) {
-        Arrays.sort(costs);
-        int iceCreamsCount = 0;
+        int[] prices = new int[100005];
+        int max = -1;
         for (int i = 0; i < costs.length; i++) {
-            if (coins - costs[i] >= 0) {
-                iceCreamsCount++;
-                coins -= costs[i];
-            } else {
-                break;
+            prices[costs[i]]++;
+            if (costs[i] > max) {
+                max = costs[i];
             }
         }
+        int iceCreamsCount = 0;
+        for (int i = 0; i <= max; i++) {
+            if (prices[i] == 0) {
+                continue;
+            }
+            if (i <= coins) {
+                while (coins >= i && prices[i] > 0) {
+                    iceCreamsCount += 1;
+                    prices[i]--;
+                    coins = coins - i;
+                }
+
+            }
+        }
+
         return iceCreamsCount;
     }
 }
