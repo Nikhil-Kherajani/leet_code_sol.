@@ -1,24 +1,15 @@
 class Solution {
     public int numSquares(int n) {
-        int [] squares = new int[(int)Math.sqrt(n)];
-        for(int i=0;i<squares.length;i++){
-            squares[i]=(i+1)*(i+1);
-        }
-        int [][] dp = new int [(int)Math.sqrt(n)][n+1];
-        for(int i=0;i<n+1;i++){
-            dp[0][i]=i;
-        }
-        for(int i=1;i<(int)Math.sqrt(n);i++){
-            for(int j=0;j<n+1;j++){
-                if(j-squares[i]>=0){
-                    dp[i][j] = Math.min(dp[i-1][j],dp[i][j-squares[i]]+1);
-                }
-                else{
-                    dp[i][j]= dp[i-1][j];
-                }
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            int min = Integer.MAX_VALUE;
+            for (int j = 1; j * j <= i; j++) {
+                min = Math.min(min, dp[i - j*j]);
             }
+            dp[i] = min + 1;
         }
-        return dp[(int)Math.sqrt(n)-1][n];
+        return dp[n];
     }
-
 }
