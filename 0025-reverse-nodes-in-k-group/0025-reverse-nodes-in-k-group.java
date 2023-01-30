@@ -1,31 +1,43 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        // base case
-        if(k == 1) return head;
-        ListNode currNode = head;
-        for(int i = 0 ; i < k ; i ++) {
-           if(head != null) {
-                head = head.next;
-           }else {
-               // last group found
-               return currNode;
-           }
+        ArrayList<Integer> a = new ArrayList<Integer>();
+        ListNode temp = head;
+        while (temp != null) {
+            a.add(temp.val);
+            temp = temp.next;
         }
-        // recursion
-        ListNode nextGroup = reverseKGroup(head,k);
-        // back tracking reverse curr group
-        ListNode currStart = currNode;
-        ListNode tempPre = currNode;
-        ListNode tempNext = null;
-        for(int i = 0 ; i < k ; i ++) {
-            tempNext = currNode.next;
-            currNode.next = tempPre;
-            tempPre = currNode;
-            currNode = tempNext;
+        for (int i = 0; i < a.size(); i += k) {
+            // System.out.println(i + " " + i+k);
+            if(i + k <= a.size())
+            reverse(a.subList(i, i + k));
         }
-        // connect curr to next group
-        currStart.next = nextGroup;
-		// return first node of curr group and keep back tracking until stack is empty
-        return tempPre;
+        temp = head;
+        for (int i = 0; i < a.size(); i++) {
+            temp.val = a.get(i);
+            temp = temp.next;
+        }
+        return head;
+    }
+
+    public void reverse(List<Integer> a) {
+        int l = 0;
+        int r = a.size()-1;
+        while (l < r) {
+            int temp = a.get(l);
+            a.set(l, a.get(r));
+            a.set(r, temp);
+            l++;
+            r--;
+        }
     }
 }
