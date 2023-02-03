@@ -1,34 +1,22 @@
-import java.util.*;
-
 class Solution {
     public String convert(String s, int numRows) {
-        String[] ans = new String[numRows];
-        for(int i = 0 ; i < numRows; i++){
-            ans[i] = "";
-        }
-        String result = "";
-        int word = 0;
-        for (int j = 0; word < s.length(); j++) {
-            for (int i = 0; i < numRows; i++) {
-                if(word >= s.length()){
-                    break;
+        if (numRows==1)return s;
+        StringBuilder builder = new StringBuilder();
+        for (int i=1;i<=numRows;i++){
+            int ind = i-1;
+            boolean up = true;
+            while (ind < s.length()){
+                builder.append(s.charAt(ind));
+                if (i==1){
+                    ind += 2*(numRows-i);
+                } else if (i==numRows){
+                    ind += 2*(i-1);
+                } else {
+                    ind += up ? 2*(numRows-i) : 2*(i-1);
+                    up=!up;
                 }
-                ans[i] += s.charAt(word);
-                word++;
-            }
-            for (int i = numRows - 2; i > 0; i--) {
-                if(word >= s.length()){
-                    break;
-                }
-                ans[i] += s.charAt(word);
-                word++;
             }
         }
-        for (int i = 0; i < numRows; i++) {
-            result += ans[i];
-        }
-
-        return result;
-
+        return builder.toString();
     }
 }
