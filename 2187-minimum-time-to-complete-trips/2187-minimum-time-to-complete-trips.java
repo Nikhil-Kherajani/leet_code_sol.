@@ -1,15 +1,6 @@
 class Solution {
-    public long min(int[] time){
-        long minv = Long.MAX_VALUE ;
-        for(long val : time){
-            if(val < minv){
-                minv = val;
-            }
-        }
-        return minv;
-    }
     public long minimumTime(int[] time, int totalTrips) {
-        long low=min(time)*totalTrips;
+        long low=Long.MAX_VALUE;
         long high=0;
         long min=Long.MAX_VALUE;
         for(int it:time){
