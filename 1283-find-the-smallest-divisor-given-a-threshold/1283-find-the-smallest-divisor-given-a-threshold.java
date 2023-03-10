@@ -25,7 +25,7 @@ class Solution {
     public int sum(int d , int[] nums){
         int sum = 0;
         for(int val : nums){
-            sum += (int)(Math.ceil(val*1d/ d));
+            sum += (Math.ceil(val*1d/ d));
         }
         return sum;
     }
