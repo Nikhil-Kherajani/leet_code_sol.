@@ -1,11 +1,11 @@
 class Solution {
     // similar to koko eating banana 
     public int smallestDivisor(int[] nums, int threshold) {
-        int h = Integer.MIN_VALUE;
+        int h = 1000000;
         int ans = 0;
-        for(int val : nums){
-            h = Math.max(h , val);
-        }
+        // for(int val : nums){
+        //     h = Math.max(h , val);
+        // }
         
         int l = 1;
         while(l <= h){
