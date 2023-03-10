@@ -23,7 +23,7 @@ class Solution {
     public int getRandom() {
         double ran = Math.random();
         // System.out.println((int)());
-        return a.get((int)(ran*100000 % size));
+        return a.get((int)(ran*10000 % size));
     }
 }
 
