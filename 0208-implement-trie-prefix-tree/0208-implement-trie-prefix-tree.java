@@ -1,50 +1,70 @@
-class TrieNode {
-    public char val;
-    public boolean isWord; 
-    public TrieNode[] children = new TrieNode[26];
-    public TrieNode() {}
-    TrieNode(char c){
-        TrieNode node = new TrieNode();
-        node.val = c;
-    }
-}
+import java.util.*;
 
-public class Trie {
-    private TrieNode root;
+class Trie {
+    class Node {
+        HashMap<Character, Node> childs;
+        boolean isEnd;
+
+        Node() {
+            this.childs = new HashMap<>();
+        }
+    }
+
+    Node root;
+
     public Trie() {
-        root = new TrieNode();
-        root.val = ' ';
+        this.root = new Node();
     }
 
     public void insert(String word) {
-        TrieNode ws = root;
-        for(int i = 0; i < word.length(); i++){
-            char c = word.charAt(i);
-            if(ws.children[c - 'a'] == null){
-                ws.children[c - 'a'] = new TrieNode(c);
+        Node curr = root;
+        int i = 0;
+        for (i = 0; i < word.length(); i++) {
+            if (!curr.childs.containsKey(word.charAt(i))) {
+                curr.childs.put(word.charAt(i), new Node());
             }
-            ws = ws.children[c - 'a'];
+            
+            curr = curr.childs.get(word.charAt(i));
         }
-        ws.isWord = true;
+         curr.isEnd = true;
+        
     }
 
     public boolean search(String word) {
-        TrieNode ws = root; 
-        for(int i = 0; i < word.length(); i++){
-            char c = word.charAt(i);
-            if(ws.children[c - 'a'] == null) return false;
-            ws = ws.children[c - 'a'];
+        Node curr = root;
+        for (int i = 0; i < word.length(); i++) {
+            if (!curr.childs.containsKey(word.charAt(i))) {
+                return false;
+            }
+            
+            curr = curr.childs.get(word.charAt(i));
         }
-        return ws.isWord;
+        // System.out.println("IN");
+
+        return curr.isEnd;
     }
 
     public boolean startsWith(String prefix) {
-        TrieNode ws = root; 
-        for(int i = 0; i < prefix.length(); i++){
-            char c = prefix.charAt(i);
-            if(ws.children[c - 'a'] == null) return false;
-            ws = ws.children[c - 'a'];
+        Node curr = root;
+        for (int i = 0; i < prefix.length(); i++) {
+            if (!curr.childs.containsKey(prefix.charAt(i))) {
+                return false;
+            }
+            if (i == prefix.length() - 1) {
+                break;
+            }
+            curr = curr.childs.get(prefix.charAt(i));
         }
+        
+
         return true;
     }
 }
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie obj = new Trie();
+ * obj.insert(word);
+ * boolean param_2 = obj.search(word);
+ * boolean param_3 = obj.startsWith(prefix);
+ */
