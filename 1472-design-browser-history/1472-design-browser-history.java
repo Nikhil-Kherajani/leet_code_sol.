@@ -1,36 +1,52 @@
-class ListNode {
-    String page;
-    ListNode next;
-    ListNode prev;
-    ListNode(String page) { this.page = page; }
-}
-
+import java.util.*;
 
 class BrowserHistory {
+    ArrayList<String> urls = new ArrayList<>();
+    private int end = -1, curr = -1;
 
-    ListNode head;
-    
     public BrowserHistory(String homepage) {
-        head = new ListNode(homepage);
-        head.prev = null;
+        urls.add(homepage);
+        curr = 0;
+        end = 0;
     }
-    
+
     public void visit(String url) {
-        ListNode prev = head;
-        head.next = new ListNode(url);
-        head = head.next;
-        head.prev = prev;
+        if (urls.size() - 1 == end && curr == end) {
+            urls.add(url);
+            curr++;
+            end++;
+        } else {
+            if(end > curr)
+               end = curr + 1;
+            else
+                end++;
+            urls.set(end, url);
+            curr++;
+        }
+
     }
-    
+
     public String back(int steps) {
-        while(steps-- > 0 && head.prev != null) head = head.prev;
-        
-        return head.page;
+        if (steps > curr) {
+            steps = curr;
+        }
+        curr = curr - steps;
+        return urls.get(curr);
     }
-    
+
     public String forward(int steps) {
-        while(steps-- > 0 && head.next != null) head = head.next;
-        
-        return head.page;
+        if (steps > (end - curr)) {
+            steps = (end - curr);
+        }
+        curr = curr + steps;
+        return urls.get(curr);
     }
 }
+
+/**
+ * Your BrowserHistory object will be instantiated and called as such:
+ * BrowserHistory obj = new BrowserHistory(homepage);
+ * obj.visit(url);
+ * String param_2 = obj.back(steps);
+ * String param_3 = obj.forward(steps);
+ */
