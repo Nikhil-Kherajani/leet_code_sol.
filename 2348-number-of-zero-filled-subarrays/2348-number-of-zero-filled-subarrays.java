@@ -11,9 +11,9 @@ class Solution {
                 count = 0;
             }
         }
-        if(count > 0){
+       
             ans += (count * (count + 1))/2;
-        }
+        
         return ans;
     }
 }
