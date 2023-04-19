@@ -1,21 +1,25 @@
 class Solution {
-    int max=0;
+    int max = Integer.MIN_VALUE;
+
     public int longestZigZag(TreeNode root) {
-       if (root == null) return -1;
-        max = 0;
-        helper(root.right, 1, true);
-        helper(root.left, 1, false);
-        return max;   
+        solve(root, false);
+        solve(root, true);
+        return max;
     }
-     private  void helper(TreeNode root, int step, boolean isRight) {
-        if (root == null) return;
-        max = Math.max(max, step);
-        if (isRight) {
-            helper(root.left, step + 1, false);
-            helper(root.right, 1, true);
-        } else {
-            helper(root.right, step + 1, true);
-            helper(root.left, 1, false);
-        }
+
+    public int solve(TreeNode node, boolean dir) {
+        if (node == null) return -1;
+
+        int right = ((node.right == null) ? -1 : solve(node.right, false)) + 1;
+        
+        int left = ((node.left == null) ? -1 : solve(node.left, true)) + 1;
+
+   
+        int childDirProfit = (dir) ? left : right;
+        int parentDirProfit = (dir) ? right : left; 
+
+        max = Math.max(max, Math.max(childDirProfit, parentDirProfit));
+        
+        return parentDirProfit;
     }
 }
