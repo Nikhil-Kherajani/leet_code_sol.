@@ -1,29 +1,22 @@
 class Solution {
     public int widthOfBinaryTree(TreeNode root) {
-        
-        if(root == null) return 0;
-        
-        int result = Integer.MIN_VALUE;
+       if (root == null) {
+           return 0;
+       }
+        return helper(root, 0, 1, new ArrayList<Integer>());
 
-        ArrayDeque<Pair<TreeNode, Integer>> q = new ArrayDeque<Pair<TreeNode, Integer>>();
-        q.add(new Pair<>(root, 0));
-
-        while(!q.isEmpty()) {
-
-            int size = q.size();
-            result = Math.max(result, (q.getLast().getValue() - q.getFirst().getValue() + 1));
-
-            for(int i = 0; i < size; i++) {
-
-                Pair<TreeNode, Integer> pair = q.poll();
-                TreeNode item = pair.getKey();
-                int index = pair.getValue();
-
-                if(item.left != null) q.add(new Pair<>(item.left, 2*index+1));
-                if(item.right != null) q.add(new Pair<>(item.right, 2*index+2));
-            }
+    }
+    private int helper(TreeNode root, int depth, int index, List<Integer> list) {
+        if (root == null) {
+            return 0;
         }
-
-        return result;
+		//add index of leftmost node to list, at depth'th position in list
+        if (depth == list.size()) {
+            list.add(index);
+        }
+        int currWidth = index - list.get(depth) + 1;
+        int leftWidth = helper(root.left, depth + 1, index * 2, list);
+        int rightWidth = helper(root.right, depth + 1, index * 2 + 1, list);
+        return Math.max(currWidth, Math.max(leftWidth, rightWidth));
     }
 }
