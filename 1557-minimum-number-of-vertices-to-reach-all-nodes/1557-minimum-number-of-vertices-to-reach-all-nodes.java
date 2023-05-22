@@ -1,19 +1,16 @@
 class Solution {
-     public List<Integer> findSmallestSetOfVertices(int n, List<List<Integer>> edges) {
-        List<Integer> res = new ArrayList();
-        
-        boolean[] inDegree = new boolean[n];
-        
-        for (List<Integer> edge : edges) {
-			//get 'to' node from the edge and set the in-degree flag for it 
-            inDegree[edge.get(1)] = true;
+    public List<Integer> findSmallestSetOfVertices(int n, List<List<Integer>> edges) {
+        boolean[] num = new boolean[n];
+    
+        for(List<Integer> val : edges){
+            num[val.get(1)] = true;
         }
-        
-        for (int i = 0; i < n; i++) {
-            if (!inDegree[i])
-                res.add(i);
+        ArrayList<Integer> ans = new ArrayList<>();
+        for(int i = 0 ; i < n ; i++){
+            if(!num[i])
+            ans.add(i);
         }
+        return ans;
         
-        return res;
     }
 }
