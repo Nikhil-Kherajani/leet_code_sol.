@@ -1,31 +1,54 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
-    public int pairSum(ListNode head) {
-        ListNode slow = head;
-        ListNode fast = head;
-
-        // Get middle of the linked list.
-        while (fast != null && fast.next != null) {
-            fast = fast.next.next;
-            slow = slow.next;
-        }
-
-        // Reverse second half of the linked list.
-        ListNode nextNode, prev = null;
-        while (slow != null) {
-            nextNode = slow.next;
-            slow.next = prev;
-            prev = slow;
-            slow = nextNode;
-        }
-
-        ListNode start = head;
-        int maximumSum = 0;
-        while (prev != null) {
-            maximumSum = Math.max(maximumSum, start.val + prev.val);
-            prev = prev.next;
-            start = start.next;
-        }
-
-        return maximumSum;
+    public ListNode rev(ListNode head) {
+    ListNode prev = null;
+    ListNode current = head; 
+    
+    while (current != null) {
+        ListNode next = current.next;
+        current.next = prev;
+        prev = current;
+        current = next;
     }
+    
+    return prev;
+}
+
+    public int pairSum(ListNode head) {
+        
+        int max = Integer.MIN_VALUE;
+        
+        ListNode s = head;
+        ListNode f = head;
+        while(f != null){
+            s = s.next;
+            f = f.next.next;
+        }
+        
+        s = rev(s);
+        while(s != null){
+            max = Math.max(max , s.val + head.val);
+            s = s.next;
+            head = head.next;
+        }
+        
+        return max;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 }
