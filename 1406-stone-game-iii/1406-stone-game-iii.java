@@ -1,33 +1,49 @@
 class Solution {
-    public String stoneGameIII(int[] stoneValue) {
-        int n = stoneValue.length;
-        Integer[] memo = new Integer[n];
-        int dif = f(stoneValue, n, 0, memo);
-        if (dif > 0) {
-            return "Alice";
-        } else if (dif < 0) {
-            return "Bob";
-        } else {
-            return "Tie";
-        }
+    Integer[] cache;
+    
+    public String stoneGameIII(int[] piles) {
+        int n = piles.length;
+        
+        cache = new Integer[n + 1];
+        
+        //AliceScore = Stone Collected by Alice - Stone Collected by Bob
+        int AliceScore = getAliceScore(piles, 0);
+        
+        if(AliceScore > 0) return "Alice";
+        
+        if(AliceScore < 0) return "Bob";
+        
+        return "Tie";
     }
-    private int f(int[] stoneValue, int n, int i, Integer[] memo) {
-        if (i == n) {
-            return 0;
+    
+    private int getAliceScore(int[] piles, int index){
+        if(index == piles.length) return 0;
+        
+        //reterive from cache
+        if(cache[index] != null) return cache[index];
+        
+        int maxScore = Integer.MIN_VALUE;
+        
+        int stone = 0;
+        
+        for(int x = 0; x < 3; x++){
+            int i = index + x;
+            
+            //ignore the invalid index
+            if(i >= piles.length) continue;
+            
+            stone += piles[i];
+
+            //calculate score
+            int score = stone - getAliceScore(piles, i + 1);
+            
+            //update score
+            maxScore = Math.max(maxScore, score);
         }
-        if (memo[i] != null) {
-            return memo[i];
-        }
-        int result = stoneValue[i] - f(stoneValue, n, i + 1, memo);
-        if (i + 2 <= n) {
-            result = Math.max(result, stoneValue[i]
-                + stoneValue[i + 1] - f(stoneValue, n, i + 2, memo));
-        }
-        if (i + 3 <= n) {
-            result = Math.max(result, stoneValue[i] + stoneValue[i + 1]
-                + stoneValue[i + 2] - f(stoneValue, n, i + 3, memo));
-        }
-        memo[i] = result;
-        return result;
+        
+        //save in cache
+        return cache[index] = maxScore;
     }
+    
+    
 }
