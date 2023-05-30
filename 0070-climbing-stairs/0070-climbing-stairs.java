@@ -1,22 +1,29 @@
 class Solution {
+    // private int ans = 0;
+    private int[] v ;
     public int climbStairs(int n) {
-        if (n == 0) {
-            return 0;
-        } else if (n == 1) {
-            return 1;
-        } else if (n == 2) {
-            return 2;
-        }
-
-        int oneAfter = 2;
-        int twoAfter = 1;
-
-        for (int i = n - 3; i >= 0; i--) {
-            int temp = oneAfter;
-            oneAfter = oneAfter + twoAfter;
-            twoAfter = temp;
-        }
-
-        return oneAfter;
+        v = new int[n+1];
+        Arrays.fill(v , -1);
+        return climb(0 , n);
+        // return ans;
     }
+    
+    public int climb(int i , int n){
+        if(i > n){
+            return 0;
+        }
+        if(v[i] != -1){
+            return v[i];
+        }
+        if(i == n){
+            // ans++;
+            return 1;
+        }
+    
+        
+        int one = climb(i + 1 , n);
+        int two = climb(i + 2 , n);
+        return v[i] = one + two;
+    }
+    
 }
