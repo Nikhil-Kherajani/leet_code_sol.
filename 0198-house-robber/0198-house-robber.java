@@ -1,29 +1,18 @@
-import java.util.ArrayList;
-
 class Solution {
-    int[] helper = new int[500];
-
     public int rob(int[] nums) {
-
-        for (int i = 0; i < helper.length; i++) {
-            helper[i] = -1;
-        }
-        return getsum(nums, 0);
+        if(nums == null || nums.length == 0) return 0;
+        int dp[] = new int[nums.length];
+        Arrays.fill(dp, -1);
+        return getMaxAmount(nums, nums.length - 1, dp);
     }
-
-    public int getsum(int[] nums, int i) {
-
-        if (i >= nums.length) {
-            return 0;
-        }
-        if (helper[i] != -1) {
-            return helper[i];
-        }
-
-        int inculde = getsum(nums, i + 2) + nums[i];
-        int notinculde = getsum(nums, i + 1);
-        int sum = Math.max(inculde, notinculde);
-        helper[i] = sum;
-        return sum;
+    
+    
+    public int getMaxAmount(int[] nums, int n, int[] dp) {
+       if(n < 0) return 0; 
+       if(n == 0) return nums[0];
+       if(n == 1) return Integer.max(nums[1], nums[0]);
+       if(dp[n] != -1) return dp[n]; 
+       dp[n] = Integer.max(nums[n] + getMaxAmount(nums, n-2, dp), getMaxAmount(nums, n-1, dp));
+       return dp[n]; 
     }
 }
