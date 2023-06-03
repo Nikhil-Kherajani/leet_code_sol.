@@ -14,7 +14,7 @@ class Solution {
     ArrayList<Pair>[] map;
     // private int nn;
     private int max = Integer.MIN_VALUE;
-    private boolean[] v;
+    // private boolean[] v;
 
     public int numOfMinutes(int n, int headID, int[] manager, int[] informTime) {
         // nn = n;
@@ -29,7 +29,7 @@ class Solution {
             }
             map[manager[i]].add(new Pair(i, informTime[manager[i]]));
         }
-        v = new boolean[n];
+        // v = new boolean[n];
         dfs(headID, 0, informTime);
         return max;
     }
