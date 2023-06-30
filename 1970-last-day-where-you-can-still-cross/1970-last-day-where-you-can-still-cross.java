@@ -61,6 +61,6 @@ class Solution {
                 return i;
             }
         }
-        return -2;
+        return -100;
     }
 }
