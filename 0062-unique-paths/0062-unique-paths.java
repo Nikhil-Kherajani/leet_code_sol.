@@ -1,19 +1,28 @@
 class Solution {
+    private int[][] v;
     public int uniquePaths(int m, int n) {
-        int[][] paths = new int[m][n];
-        paths[m - 1][n - 1] = 1;
-
-        for (int i = m - 1; i >= 0; i--) {
-            for (int j = n - 1; j >= 0; j--) {
-                if (j < n - 1) {
-                    paths[i][j] += paths[i][j + 1];
-                }
-                if (i < m - 1) {
-                    paths[i][j] += paths[i + 1][j];
-                }
-            }
+        if(m == 1 && n == 1){
+            return 1;
         }
+        v = new int[m][n];
+        return dfs(0,0,m,n);
+    }
+    
+    public int dfs(int i, int j, int m, int n){
+        if(i>=m || j>=n){
+            return 0;
+        }
+        if(v[i][j] != 0){
+            return v[i][j];
+        }
+        else if(i == m-1 && j==n-1){
+            return 1;
+        }
+        int paths = 0;
+        paths += dfs(i,j+1,m,n);
+        paths += dfs(i+1,j,m,n);
+        return v[i][j] = paths;
 
-        return paths[0][0];
+        
     }
 }
