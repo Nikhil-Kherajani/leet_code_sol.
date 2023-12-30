@@ -6,8 +6,8 @@ class Solution {
                 counts[c - 'a']++;
             }
         }
-        
-        int n = words.length;
+       
+   int n = words.length;
         for (int val : counts) {
             if (val % n != 0) {
                 return false;
